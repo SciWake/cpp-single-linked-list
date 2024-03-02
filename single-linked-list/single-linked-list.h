@@ -217,22 +217,18 @@ private:
     Node head_;
     size_t size_ = 0;
 
-    template<typename T>
-    void Assign(T& elem) {
+    template <typename T>
+    void Assign(const T& elem) {
         SingleLinkedList elem_copy;
-        SingleLinkedList tmp_reverse;
+        auto it = elem_copy.before_begin(); 
 
-        // первый цикл вставляет элементы в обратном порядке
-        for (auto it = elem.begin(); it != elem.end(); ++it) {
-            tmp_reverse.PushFront(*it);
-        }
-        // второй цикл вставляет элементы в нужном для обмена порядке
-        for (auto it = tmp_reverse.begin(); it != tmp_reverse.end(); ++it) {
-            elem_copy.PushFront(*it);
+        for (auto current = elem.begin(); current != elem.end(); ++current) {
+            it = elem_copy.InsertAfter(it, *current);
         }
 
         swap(elem_copy);
     }
+
 };
 
 template <typename Type>
